@@ -19,7 +19,8 @@
   <button onclick="sendMessage()">Send</button>
 
   <script>
-    const socket = io();
+    const socket = io('https://sideliness.com'); // Conecta al dominio de tu servidor
+
 
     // Función para enviar mensajes
     function sendMessage() {
