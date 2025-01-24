@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #chat-area { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; margin-bottom: 10px; }
+    #user-count { margin-bottom: 10px; font-weight: bold; }
+    input, button { padding: 10px; margin: 5px; }
+  </style>
+</head>
+<body>
+  <div id="user-count">Users Online: 0</div>
+  <div id="chat-area"></div>
+  <input id="message-input" type="text" placeholder="Type your message here..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    const socket = io();
+
+    // Función para enviar mensajes
+    function sendMessage() {
+      const input = document.getElementById('message-input');
+      if (input.value.trim()) { // Verifica que no esté vacío
+        socket.emit('chat message', input.value); // Envía el mensaje al servidor
+        input.value = ''; // Limpia el campo de texto
+      }
+    }
+
+    // Escucha de mensajes desde el servidor
+    socket.on('chat message', (data) => {
+      const chatArea = document.getElementById('chat-area');
+      // Muestra el ID del usuario con su color y el mensaje
+      chatArea.innerHTML += `<p><strong style="color:${data.color}">${data.id}:</strong> ${data.text}</p>`;
+      chatArea.scrollTop = chatArea.scrollHeight; // Desplaza hacia abajo
+    });
+
+    // Actualización del número de usuarios conectados
+    socket.on('user count', (count) => {
+      document.getElementById('user-count').innerText = `Users Online: ${count}`;
+    });
+  </script>
+</body>
+</html>
