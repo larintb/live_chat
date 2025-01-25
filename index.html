@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat App</title>
+  <title>Live Chat</title>
   <script src="/socket.io/socket.io.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
@@ -11,38 +11,38 @@
     #user-count { margin-bottom: 10px; font-weight: bold; }
     input, button { padding: 10px; margin: 5px; }
   </style>
-</head>
-<body>
-  <div id="user-count">Users Online: 0</div>
-  <div id="chat-area"></div>
-  <input id="message-input" type="text" placeholder="Type your message here..." />
-  <button onclick="sendMessage()">Send</button>
-
   <script>
-    const socket = io('https://www.sideliness.com'); // Conecta al dominio de tu servidor
+    document.addEventListener('DOMContentLoaded', () => {
+      const socket = io('https://www.sideliness.com'); // Conecta al dominio de tu servidor
 
+      // Enviar mensaje de chat
+      document.getElementById('chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = document.getElementById('msg').value;
+        socket.emit('chat message', msg);
+        document.getElementById('msg').value = '';
+      });
 
-    // Función para enviar mensajes
-    function sendMessage() {
-      const input = document.getElementById('message-input');
-      if (input.value.trim()) { // Verifica que no esté vacío
-        socket.emit('chat message', input.value); // Envía el mensaje al servidor
-        input.value = ''; // Limpia el campo de texto
-      }
-    }
+      // Recibir mensaje de chat
+      socket.on('chat message', (data) => {
+        const item = document.createElement('li');
+        item.textContent = `${data.id} (${data.color}): ${data.text}`;
+        document.getElementById('messages').appendChild(item);
+      });
 
-    // Escucha de mensajes desde el servidor
-    socket.on('chat message', (data) => {
-      const chatArea = document.getElementById('chat-area');
-      // Muestra el ID del usuario con su color y el mensaje
-      chatArea.innerHTML += `<p><strong style="color:${data.color}">${data.id}:</strong> ${data.text}</p>`;
-      chatArea.scrollTop = chatArea.scrollHeight; // Desplaza hacia abajo
-    });
-
-    // Actualización del número de usuarios conectados
-    socket.on('user count', (count) => {
-      document.getElementById('user-count').innerText = `Users Online: ${count}`;
+      // Actualizar número de usuarios conectados
+      socket.on('user count', (count) => {
+        document.getElementById('user-count').textContent = `Users connected: ${count}`;
+      });
     });
   </script>
+</head>
+<body>
+  <h1>Live Chat</h1>
+  <p id="user-count">Users connected: 0</p>
+  <ul id="messages"></ul>
+  <form id="chat-form">
+    <input id="msg" autocomplete="off" /><button>Send</button>
+  </form>
 </body>
 </html>
