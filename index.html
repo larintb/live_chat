@@ -3,46 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Chat</title>
-  <script src="/socket.io/socket.io.js"></script>
+  <title>Coming Soon</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #chat-area { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: auto; margin-bottom: 10px; }
-    #user-count { margin-bottom: 10px; font-weight: bold; }
-    input, button { padding: 10px; margin: 5px; }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    .container {
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+    }
+    p {
+      font-size: 1.5em;
+      color: #555;
+    }
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const socket = io('https://www.sideliness.com'); // Conecta al dominio de tu servidor
-
-      // Enviar mensaje de chat
-      document.getElementById('chat-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const msg = document.getElementById('msg').value;
-        socket.emit('chat message', msg);
-        document.getElementById('msg').value = '';
-      });
-
-      // Recibir mensaje de chat
-      socket.on('chat message', (data) => {
-        const item = document.createElement('li');
-        item.textContent = `${data.id} (${data.color}): ${data.text}`;
-        document.getElementById('messages').appendChild(item);
-      });
-
-      // Actualizar número de usuarios conectados
-      socket.on('user count', (count) => {
-        document.getElementById('user-count').textContent = `Users connected: ${count}`;
-      });
-    });
-  </script>
 </head>
 <body>
-  <h1>Live Chat</h1>
-  <p id="user-count">Users connected: 0</p>
-  <ul id="messages"></ul>
-  <form id="chat-form">
-    <input id="msg" autocomplete="off" /><button>Send</button>
-  </form>
+  <div class="container">
+    <h1>We're Not Ready Yet!</h1>
+    <p>Stay tuned for something amazing. Check back soon!</p>
+  </div>
 </body>
 </html>
