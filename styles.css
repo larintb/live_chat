@@ -1,21 +1,80 @@
-
 body {
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-}
-.container {
+    font-family: 'Play', sans-serif;
     text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110%;  /* Ensanchar un poco */
+    height: 100%; /* Agrandar un poco */
+    background: url('stadium-football-sports.jpg') no-repeat center center/cover;
+    transform: scale(1.1); /* Evita que el blur cause el efecto blanco en los bordes */
+    animation: blurEffect 3s ease-in-out 2s forwards;
+    z-index: -1;
+}
+
+
+
+@keyframes blurEffect {
+    0% {
+        filter: blur(0px); /* Sin desenfoque al inicio */
+    }
+    100% {
+        filter: blur(8px); /* Desenfoque máximo después de 3s */
+    }
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 40px; /* Reducido de 40px a 20px arriba y abajo */
+    border-radius: 10px;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+
 h1 {
-    font-size: 3em;
-    margin-bottom: 0.5em;
+    font-size: 100px;
+    font-weight: 700;
+    margin-bottom: 10px; /* Reduce espacio entre el título y el subtítulo */
 }
-p {
-    font-size: 1.5em;
-    color: #555;
+
+.subtitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px; /* Reduce espacio con la descripción */
 }
+
+.description {
+    font-size: 22px;
+    margin-bottom: 20px; /* Reduce espacio antes del botón */
+}
+
+.join-button {
+    background-color: #10F2A3;
+    border: none;
+    padding: 12px 25px; /* Reduce padding del botón */
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.join-button:hover {
+    background-color: #10ac84;
+}
+
