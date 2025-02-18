@@ -25,6 +25,22 @@ body::before {
     z-index: -1;
 }
 
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 68px !important; /* Reduce el tamaño del título en móviles */
+    }
+
+    .subtitle {
+        font-size: 18px; /* Reduce el tamaño del subtítulo */
+    }
+
+    .container {
+        padding: 20px; /* Reduce el padding para que no se vea demasiado grande */
+        width: 90%; /* Ajusta el ancho para que no se vea tan comprimido */
+    }
+}
+
+
 
 
 @keyframes blurEffect {
